@@ -1,7 +1,11 @@
 import React from "react";
-
-function App() {
-  return <div> Hello world ! Typescript</div>;
-}
+import Routes from "./Routes";
+const App = () => {
+  return (
+    <div>
+      <Routes />
+    </div>
+  );
+};
 
 export default App;
