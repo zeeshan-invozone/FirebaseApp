@@ -38,96 +38,83 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Dashboard = () => {
-  const [pData, setPdata] = useState('');
+  const [pData, setPdata] = useState(null);
   const classes = useStyles();
+
   useEffect(() => {
     getUserInfo();
   }, []);
 
   const getUserInfo = async () => {
-    const { uid } = firebase.auth().currentUser;
     const db = firebase.firestore();
     const user = await db.collection('users').get();
-    const profiles = [];
     user.forEach((doc) => {
       const profile = doc.data();
-      profiles.push(profile);
+      setPdata(profile);
     });
-    const finalP = profiles.filter((item) => {
-      return item.uid === uid;
-    });
-    console.log('file', finalP);
-    setPdata(finalP);
   };
   return (
     <div>
       <Grid container className={classes.root} spacing={2}>
         <Grid item xs={12} className={classes.gridMain}>
           <Paper className={classes.paper} elevation={5}>
-            <Grid container className={classes.items}>
-              <Grid item xs={12} className={classes.gridItem} my={3}>
-                <Typography>
-                  <strong></strong>
-                </Typography>
-                {/* <ShowBadge /> */}
-                <EditIcon color='error' className={classes.editIcon} />
-              </Grid>
-              {pData.length > 0 &&
-                pData.map((elem, index) => (
-                  <Grid container key={index}>
-                    <Grid item xs={12} className='mt-3 mb-5'>
-                      <img
-                        src={elem.imgUrl}
-                        alt='profile-image'
-                        style={{
-                          width: '100px',
-                          height: '100px',
-                          borderRadius: '50%',
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={12} className={classes.gridItem} my={3}>
-                      <Typography>
-                        <strong>Name</strong>
-                      </Typography>
-                      <Typography>
-                        <strong>{elem.name}</strong>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12} className={classes.gridItem} my={3}>
-                      <Typography>
-                        <strong>Age</strong>
-                      </Typography>
-                      <Typography>
-                        <strong>{elem.age}</strong>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12} className={classes.gridItem} my={3}>
-                      <Typography>
-                        <strong>Address</strong>
-                      </Typography>
-                      <Typography>
-                        <strong>{elem.address}</strong>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12} className={classes.gridItem} my={3}>
-                      <Typography>
-                        <strong>Company</strong>
-                      </Typography>
-                      <Typography>
-                        <strong>{elem.company}</strong>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12} className={classes.gridItem} my={3}>
-                      <Typography>
-                        <strong>Designation</strong>
-                      </Typography>
-                      <Typography>
-                        <strong>{elem.designation}</strong>
-                      </Typography>
-                    </Grid>
+            <h1 className='mt-2 mb-3'> DashBoard </h1>
+            <Grid container>
+              {pData && (
+                <>
+                  <Grid item xs={12} className='mt-3 mb-5'>
+                    <img
+                      src={pData.imageUrl}
+                      alt='profile-image'
+                      style={{
+                        width: '100px',
+                        height: '100px',
+                        borderRadius: '50%',
+                      }}
+                    />
                   </Grid>
-                ))}
+                  <Grid item xs={12} className={classes.gridItem}>
+                    <Typography>
+                      <strong>Name</strong>
+                    </Typography>
+                    <Typography>
+                      <strong>{pData.name}</strong>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} className={classes.gridItem}>
+                    <Typography>
+                      <strong>Age</strong>
+                    </Typography>
+                    <Typography>
+                      <strong>{pData.age}</strong>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} className={classes.gridItem}>
+                    <Typography>
+                      <strong>Address</strong>
+                    </Typography>
+                    <Typography>
+                      <strong>{pData.address}</strong>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} className={classes.gridItem}>
+                    <Typography>
+                      <strong>Company</strong>
+                    </Typography>
+                    <Typography>
+                      <strong>{pData.company}</strong>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} className={classes.gridItem}>
+                    <Typography>
+                      <strong>Designation</strong>
+                    </Typography>
+                    <Typography>
+                      <strong>{pData.designation}</strong>
+                    </Typography>
+                  </Grid>
+                </>
+              )}
             </Grid>
           </Paper>
         </Grid>

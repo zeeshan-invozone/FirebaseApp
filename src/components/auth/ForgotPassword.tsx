@@ -6,7 +6,7 @@ const ForgotPassword = () => {
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     const res = await FORGOT_PASSWORD({ email });
-    console.log(res);
+    alert('email send successfully');
   };
   return (
     <div>

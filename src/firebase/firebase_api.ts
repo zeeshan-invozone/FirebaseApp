@@ -15,8 +15,8 @@ interface USER {
   address: string;
   company: string;
   designation: string;
-  imageUrl: string;
   uid: string;
+  imageUrl: string;
 }
 
 export const SIGNUP = async (signup: REGISTRATION) => {
@@ -36,6 +36,7 @@ export const SIGNIN = async (signin: REGISTRATION) => {
       .auth()
       .signInWithEmailAndPassword(signin.email, signin.password);
   } catch (error) {
+    console.log(error.message);
     return error.message;
   }
 };
@@ -69,7 +70,8 @@ export const CREATE_USER_PROFILE = async (user: USER) => {
       designation: user.designation,
       imageUrl: user.imageUrl,
     };
-    const res = await db.collection('users').add(newUser);
+    const res = await db.collection('users').doc(user.uid).set(newUser);
+    console.log('res', res);
     return res;
   } catch (error) {
     return error.message;

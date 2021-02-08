@@ -16,8 +16,7 @@ const Login = () => {
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     console.log(email, password);
-    const res = await SIGNIN({ email, password });
-    console.log('res', res.user.uid);
+    await SIGNIN({ email, password });
   };
   const { currentUser } = useContext(AuthContext);
   console.log('currentUser1', currentUser);

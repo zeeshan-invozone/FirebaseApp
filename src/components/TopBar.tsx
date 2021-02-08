@@ -33,9 +33,6 @@ const TopBar = () => {
           <Typography variant='h6' className={classes.title}>
             Profile
           </Typography>
-          <Button color='inherit' onClick={() => history.push('/login')}>
-            Login
-          </Button>
           <Button color='inherit' onClick={handleSignOut}>
             SignOut
           </Button>
